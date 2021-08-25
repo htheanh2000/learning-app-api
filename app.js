@@ -6,6 +6,12 @@ app.get('/', (req, res) => {
   res.send('<h1>Express Demo App</h1> <h4>Message: Success again</h4> <p>Version 1.1</p>');
 })
 
+app.get('/health-check', (req, res) => {
+  res.send({
+    message: "SERVER IS RUNNING"
+  });
+})
+
 app.get('/products', (req, res) => {
   res.send([
     {
