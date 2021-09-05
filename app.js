@@ -3,13 +3,22 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const logger = require('morgan')
 const app = express();
+const port = 3000;
+
+// config import
+const {db} = require('./server/config')
+
+// controller import
+const {healthCheck} = require('./server/controllers/health-check')
+const {createUser,getAllUser} = require('./server/controllers/user')
+
+// middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(logger('dev'));
 
-const port = 3000;
-
-mongoose.connect("mongodb+srv://admin:Theanh123!@cluster0.0gk1e.mongodb.net/la?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
+// connect db
+mongoose.connect(`mongodb+srv://${db.USERNAME}:${db.PASSWORD}@cluster0.0gk1e.mongodb.net/${db.DB}?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(()=> {
     console.log('Database connected');
   })
@@ -17,22 +26,11 @@ mongoose.connect("mongodb+srv://admin:Theanh123!@cluster0.0gk1e.mongodb.net/la?r
     console.log('Error connecting to database');
   });
 
-
-app.get('/', (req, res) => {
-  res.send('<h1>Express Demo App</h1> <h4>Message: Success again</h4> <p>Version 1.1</p>');
-})
-
-app.get('/health-check', (req, res) => {
-  res.send({
-    message: "SERVER IS RUNNING NOW"
-  });
-})
-
-const {createUser,getAllUser} = require('./server/controllers/user')
-app.post('/user/create-user', createUser);
-app.get('/user/get-all-user', getAllUser);
+// route
+require('./server/routes/auth.routes')(app);
+require('./server/routes/user.routes')(app);
 
 app.listen(port, ()=> {
-  console.log(`Demo app is up and listening to port: ${port}`);
+  console.log(`App is listening to port: ${port}`);
 })
  

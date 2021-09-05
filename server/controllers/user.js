@@ -1,5 +1,5 @@
 const mongoose = require('mongoose') ;
-const User = require('../models/user')
+const User = require('../models/user.model')
 
 // create new cause
  function createUser (req, res) {
@@ -15,7 +15,7 @@ const User = require('../models/user')
         return res.status(201).json({
           success: true,
           message: 'New user created successfully',
-          User: newUser,
+          user: newUser,
         });
       })
       .catch((error) => {
@@ -35,7 +35,7 @@ const User = require('../models/user')
         return res.status(200).json({
           success: true,
           message: 'A list of all user',
-          user: allUser,
+          users: allUser,
         });
       })
       .catch((err) => {
