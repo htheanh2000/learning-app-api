@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 
 app.get('/health-check', (req, res) => {
   res.send({
-    message: "SERVER IS RUNNING"
+    message: "SERVER IS RUNNING NOW"
   });
 })
 
