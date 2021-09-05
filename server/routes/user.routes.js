@@ -9,20 +9,9 @@ module.exports = function(app) {
     );
     next();
   });
+  
+  app.get("/api/user/", controller.getAll)
+  app.get("/api/user/:id", controller.getById)
+  app.put("/api/user/:id/add-new-words", controller.addNewWords)
 
-  app.get("/api/test/all", controller.allAccess);
-
-  app.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
-
-  app.get(
-    "/api/test/mod",
-    [authJwt.verifyToken, authJwt.isModerator],
-    controller.moderatorBoard
-  );
-
-  app.get(
-    "/api/test/admin",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.adminBoard
-  );
 };
