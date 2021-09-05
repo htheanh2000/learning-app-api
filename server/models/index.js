@@ -4,5 +4,7 @@ const db = {};
 db.mongoose = mongoose;
 db.user = require("./user.model");
 db.role = require("./role.model");
+db.vocabulary = require("./vocabulary.model");
 db.ROLES = ["user", "admin", "moderator"];
+db.PART_OF_SPEECH = ["verb", "noun", "adjective"]
 module.exports = db;

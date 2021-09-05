@@ -8,10 +8,6 @@ const port = 3000;
 // config import
 const {db} = require('./server/config')
 
-// controller import
-const {healthCheck} = require('./server/controllers/health-check')
-const {createUser,getAllUser} = require('./server/controllers/user')
-
 // middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -29,6 +25,7 @@ mongoose.connect(`mongodb+srv://${db.USERNAME}:${db.PASSWORD}@cluster0.0gk1e.mon
 // route
 require('./server/routes/auth.routes')(app);
 require('./server/routes/user.routes')(app);
+require('./server/routes/vocabulary.routes')(app);
 
 app.listen(port, ()=> {
   console.log(`App is listening to port: ${port}`);
