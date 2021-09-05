@@ -35,7 +35,7 @@ const User = require('../models/user')
         return res.status(200).json({
           success: true,
           message: 'A list of all user',
-          Course: allUser,
+          user: allUser,
         });
       })
       .catch((err) => {
