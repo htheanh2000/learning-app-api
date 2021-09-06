@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const logger = require('morgan')
+const cors = require('cors')
 const app = express();
 const port = 3000;
 
@@ -12,6 +13,7 @@ const {db} = require('./server/config')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(logger('dev'));
+app.use(cors())
 
 // connect db
 mongoose.connect(`mongodb+srv://${db.USERNAME}:${db.PASSWORD}@cluster0.0gk1e.mongodb.net/${db.DB}?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true })
