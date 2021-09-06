@@ -8,11 +8,7 @@ exports.getAll = (req, res) => {
   })
     .select('_id username email roles')
     .then((user) => {
-      return res.status(200).json({
-        success: true,
-        message: 'A list of all user',
-        data: user,
-      });
+      return res.status(200).json(user);
     })
     .catch((err) => {
       res.status(500).json({
