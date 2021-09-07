@@ -17,7 +17,11 @@ const User = mongoose.model(
         ref: "Vocabulary",
         default: []
       }
-    ]
+    ],
+    is_deleted: {
+      type: String,
+      default: false
+    }
   })
 );
 module.exports = User;

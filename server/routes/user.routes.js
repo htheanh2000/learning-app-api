@@ -13,5 +13,6 @@ module.exports = function(app) {
   app.get("/api/user/", controller.getAll)
   app.get("/api/user/:id", controller.getById)
   app.put("/api/user/:id/add-new-words", controller.addNewWords)
-
+  app.delete("/api/user/:id/", controller.deleteUser)
+  app.put("/api/user/:id/", controller.updateUser)
 };
