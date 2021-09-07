@@ -22,7 +22,6 @@ exports.getAll = (req, res) => {
 
 exports.getById = (req, res) => {
   User.findById(req.params.id)
-    .aggregate()
     .select('_id username email roles is_deleted')
     .then((user) => {
       return res.status(200).json({
