@@ -97,7 +97,7 @@ exports.deleteUser = async (req, res) => {
 // update User
 exports.updateUser = async (req, res) => {
   const updateUser = {
-    username: req.body.name,
+    username: req.body.username,
     email: req.body.email,
   }
   newWords = await User.findByIdAndUpdate(req.params.id, {
