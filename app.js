@@ -15,6 +15,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(logger('dev'));
 app.use(cors())
 
+// PORT
+const PORT = process.env.PORT || 3000
+
 // connect db
 mongoose.connect(`mongodb+srv://${db.USERNAME}:${db.PASSWORD}@cluster0.0gk1e.mongodb.net/${db.DB}?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(()=> {
@@ -31,7 +34,7 @@ require('./server/routes/vocabulary.routes')(app);
 app.get("/", (req,res)=> {
   res.json('Hello world Heroku')
 });
-app.listen(port, ()=> {
-  console.log(`App is listening to port: ${port}`);
+app.listen(PORT, ()=> {
+  console.log(`App is listening to port: ${PORT}`);
 })
  
