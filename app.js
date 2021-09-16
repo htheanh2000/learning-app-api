@@ -29,7 +29,7 @@ require('./server/routes/auth.routes')(app);
 require('./server/routes/user.routes')(app);
 require('./server/routes/vocabulary.routes')(app);
 app.get("/", (req,res)=> {
-  res.json('Hello world')
+  res.json('Hello world Heroku')
 });
 app.listen(port, ()=> {
   console.log(`App is listening to port: ${port}`);
