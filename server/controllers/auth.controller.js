@@ -121,9 +121,13 @@ exports.login = (req, res) => {
     .populate("roles", "-__v")
     .exec((err, user) => {
       console.log('after exec', err, user);
+      console.log('1')
+
       if (err) {
         return res.status(500).json({ message: err });
       }
+      console.log('2')
+
       if (!user) {
         return res.status(404).json({ message: "User Not found." });
       }
@@ -131,26 +135,30 @@ exports.login = (req, res) => {
         req.body.password,
         user.password
       );
+      console.log('3')
       if (!passwordIsValid) {
         return res.status(401).json({
           accessToken: null,
           message: "Invalid Password!"
         });
       }
+      console.log('4')
       var token = jwt.sign({ id: user.id }, config.secret, {
         expiresIn: 86400 // 24 hours
       });
       var authorities = [];
+      console.log('5')
       for (let i = 0; i < user.roles.length; i++) {
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
+
+        console.log('before return', user);
+        return res.status(200).json({
+          id: user._id,
+          username: user.username,
+          email: user.email,
+          roles: authorities,
+          accessToken: token
+        });
       }
-      console.log('before return', user);
-      return res.status(200).json({
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        roles: authorities,
-        accessToken: token
-      });
-    });
+    })
 };
