@@ -95,16 +95,21 @@ exports.signin = (req, res) => {
 };
 
 exports.login = (req, res) => {
-  
+  console.log(req.body.usernam);
   User.findOne({
     username: req.body.username
   })
-    .then((err, user) => {
-      console.log('login : user', user);
+    .then((user) => {
+      console.log('loginn : user', user);
       return res.status(200).json({
         user
       });
-    });
+    })
+    .catch(e => {
+      return res.status(500).json({
+        message: 'SERVER ERROR'
+      })
+    })
   // res.status(200).json({
   //   message: 'Duma'
   // })
