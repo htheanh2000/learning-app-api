@@ -55,14 +55,15 @@ exports.signup = (req, res) => {
   });
 };
 exports.signin = (req, res) => {
+  console.log('signin body', req.body);
   User.findOne({
     username: req.body.username
   })
     .populate("roles", "-__v")
     .exec((err, user) => {
+      console.log('after exec', err, user);
       if (err) {
-        res.status(500).json({ message: err });
-        return;
+        return res.status(500).json({ message: err });
       }
       if (!user) {
         return res.status(404).json({ message: "User Not found." });
@@ -84,7 +85,7 @@ exports.signin = (req, res) => {
       for (let i = 0; i < user.roles.length; i++) {
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
-      res.status(200).json({
+      return res.status(200).json({
         id: user._id,
         username: user.username,
         email: user.email,
