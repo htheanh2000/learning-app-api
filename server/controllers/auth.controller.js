@@ -111,7 +111,7 @@ exports.login = (req, res) => {
         message: 'SERVER ERROR'
       })
     })
-  res.status(200).json({
-    message: 'Duma'
-  })
+  // res.status(200).json({
+  //   message: 'Duma'
+  // })
 };
