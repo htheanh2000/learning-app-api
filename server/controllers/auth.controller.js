@@ -144,6 +144,7 @@ exports.login = (req, res) => {
       for (let i = 0; i < user.roles.length; i++) {
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
+      console.log('before return', user);
       return res.status(200).json({
         id: user._id,
         username: user.username,
