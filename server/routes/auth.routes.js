@@ -18,5 +18,4 @@ module.exports = function(app) {
     controller.signup
   );
   app.post("/api/auth/sign-in", controller.signin);
-  app.post("/api/log-in", controller.login);
 };
