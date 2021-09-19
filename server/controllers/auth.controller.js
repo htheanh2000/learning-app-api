@@ -12,7 +12,7 @@ exports.signup = (req, res) => {
   });
   user.save((err, user) => {
     if (err) {
-      res.status(500).send({ message: err });
+      res.status(500).json({ message: err });
       return;
     }
     if (req.body.roles) {
@@ -22,33 +22,33 @@ exports.signup = (req, res) => {
         },
         (err, roles) => {
           if (err) {
-            res.status(500).send({ message: err });
+            res.status(500).json({ message: err });
             return;
           }
           user.roles = roles.map(role => role._id);
           user.save(err => {
             if (err) {
-              res.status(500).send({ message: err });
+              res.status(500).json({ message: err });
               return;
             }
-            res.send({ message: "User was registered successfully!" });
+            res.json({ message: "User was registered successfully!" });
           });
         }
       );
     } else {
       Role.findOne({ name: "user" }, (err, role) => {
         if (err) {
-          res.status(500).send({ message: err });
+          res.status(500).json({ message: err });
           return;
         }
         console.log({role});
         user.roles = [role._id];
         user.save(err => {
           if (err) {
-            res.status(500).send({ message: err });
+            res.status(500).json({ message: err });
             return;
           }
-          res.send({ message: "User was registered successfully!" });
+          res.json({ message: "User was registered successfully!" });
         });
       });
     }
@@ -61,18 +61,18 @@ exports.signin = (req, res) => {
     .populate("roles", "-__v")
     .exec((err, user) => {
       if (err) {
-        res.status(500).send({ message: err });
+        res.status(500).json({ message: err });
         return;
       }
       if (!user) {
-        return res.status(404).send({ message: "User Not found." });
+        return res.status(404).json({ message: "User Not found." });
       }
       var passwordIsValid = bcrypt.compareSync(
         req.body.password,
         user.password
       );
       if (!passwordIsValid) {
-        return res.status(401).send({
+        return res.status(401).json({
           accessToken: null,
           message: "Invalid Password!"
         });
@@ -84,7 +84,7 @@ exports.signin = (req, res) => {
       for (let i = 0; i < user.roles.length; i++) {
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
-      res.status(200).send({
+      res.status(200).json({
         id: user._id,
         username: user.username,
         email: user.email,
