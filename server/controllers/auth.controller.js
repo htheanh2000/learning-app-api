@@ -41,7 +41,7 @@ exports.signup = (req, res) => {
           res.status(500).json({ message: err });
           return;
         }
-        console.log({role});
+        console.log({ role });
         user.roles = [role._id];
         user.save(err => {
           if (err) {
@@ -95,10 +95,11 @@ exports.signin = (req, res) => {
 };
 
 exports.login = (req, res) => {
-  console.log(req.body.usernam);
+  console.log(req.body);
   User.findOne({
     username: req.body.username
   })
+    .exec()
     .then((user) => {
       console.log('loginn : user', user);
       return res.status(200).json({
@@ -110,7 +111,7 @@ exports.login = (req, res) => {
         message: 'SERVER ERROR'
       })
     })
-  // res.status(200).json({
-  //   message: 'Duma'
-  // })
+  res.status(200).json({
+    message: 'Duma'
+  })
 };
