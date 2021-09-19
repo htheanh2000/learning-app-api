@@ -97,22 +97,59 @@ exports.signin = (req, res) => {
 
 exports.login = (req, res) => {
   console.log(req.body);
-  User.findOne({
-    username: req.body.username
-  })
-    .exec()
-    .then((user) => {
-      console.log('loginn : user', user);
-      return res.status(200).json({
-        user
-      });
-    })
-    .catch(e => {
-      return res.status(500).json({
-        message: 'SERVER ERROR'
-      })
-    })
+  // User.findOne({
+  //   username: req.body.username
+  // })
+  //   .exec()
+  //   .then((user) => {
+  //     console.log('loginn : user', user);
+  //     return res.status(200).json({
+  //       user
+  //     });
+  //   })
+  //   .catch(e => {
+  //     return res.status(500).json({
+  //       message: 'SERVER ERROR'
+  //     })
+  //   })
   // res.status(200).json({
   //   message: 'Duma'
   // })
+  User.findOne({
+    username: req.body.username
+  })
+    .populate("roles", "-__v")
+    .exec((err, user) => {
+      console.log('after exec', err, user);
+      if (err) {
+        return res.status(500).json({ message: err });
+      }
+      if (!user) {
+        return res.status(404).json({ message: "User Not found." });
+      }
+      var passwordIsValid = bcrypt.compareSync(
+        req.body.password,
+        user.password
+      );
+      if (!passwordIsValid) {
+        return res.status(401).json({
+          accessToken: null,
+          message: "Invalid Password!"
+        });
+      }
+      var token = jwt.sign({ id: user.id }, config.secret, {
+        expiresIn: 86400 // 24 hours
+      });
+      var authorities = [];
+      for (let i = 0; i < user.roles.length; i++) {
+        authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
+      }
+      return res.status(200).json({
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        roles: authorities,
+        accessToken: token
+      });
+    });
 };
