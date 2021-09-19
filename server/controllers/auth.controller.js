@@ -99,10 +99,9 @@ exports.login = (req, res) => {
     username: req.body.username
   })
     .populate("roles", "-__v")
-    .exec((err, user) => {
+    .then((err, user) => {
       if (err) {
-        res.status(500).json({ message: err });
-        return;
+        return res.status(500).json({ message: err });
       }
       if (!user) {
         return res.status(404).json({ message: "User Not found." });
