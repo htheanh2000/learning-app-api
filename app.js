@@ -4,7 +4,6 @@ const mongoose = require('mongoose')
 const logger = require('morgan')
 const cors = require('cors')
 const app = express();
-const port = 3000;
 
 // config import
 const {db} = require('./server/config')

@@ -93,3 +93,9 @@ exports.signin = (req, res) => {
       });
     });
 };
+
+exports.login = (req, res) => {
+  res.status(200).json({
+    message: 'Duma'
+  })
+};
