@@ -4,6 +4,9 @@ const User = db.user;
 const Role = db.role;
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+const mongoose =  require('mongoose')
+const ObjectId = mongoose.Types.ObjectId;
+
 exports.signup = (req, res) => {
   const user = new User({
     username: req.body.username,
@@ -60,7 +63,7 @@ exports.signin = (req, res) => {
     username: req.body.username
   })
     .populate("roles", "-__v")
-    .exec((err, user) => {
+    .exec(async (err, user) => {
       console.log('after exec', err, user);
       if (err) {
         return res.status(500).json({ message: err });
@@ -85,12 +88,51 @@ exports.signin = (req, res) => {
       for (let i = 0; i < user.roles.length; i++) {
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
+      const category = await getUserCategoryById(user._id)
       return res.status(200).json({
         id: user._id,
         username: user.username,
         email: user.email,
         roles: authorities,
-        accessToken: token
+        accessToken: token,
+        category: category.reduce((a, v) => ({ ...a, [v.type]: v.count}), {}) 
       });
     });
 };
+
+const getUserCategoryById = async (id) => {
+  console.log("id", id);
+  if(!id) return []
+  return await User.aggregate([
+    { $match: { _id: ObjectId(id) } },
+    { $project: { "is_deleted": 0, "__v": 0, "password": 0, "roles": 0 } },
+    {
+      $lookup:
+      {
+        from: "vocabularies",
+        localField: "category",
+        foreignField: "_id",
+        as: "category"
+      }
+    },
+    {
+      $unwind: {
+        path: "$category",
+        includeArrayIndex: "arrayIndex"
+      }
+    },
+    {
+      $group: {
+        _id: "$category.type",
+        type: { $first: "$category.type" },
+        count: { $sum: 1 }
+      }
+    }
+  ])
+    .then((category) => {
+      return category
+    })
+    .catch((err) => {
+      return []
+    });
+}

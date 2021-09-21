@@ -1,7 +1,8 @@
-const { response } = require("express");
+
+const mongoose =  require('mongoose')
 const db = require("../models");
 const User = db.user;
-const Vocabulary = db.vocabulary;
+const ObjectId = mongoose.Types.ObjectId;
 
 exports.getAll = (req, res) => {
   User.find({
@@ -20,47 +21,69 @@ exports.getAll = (req, res) => {
     });
 }
 
-exports.getById = (req, res) => {
-  User.findById(req.params.id)
-    .select('_id username email roles is_deleted')
-    .then((user) => {
-      return res.status(200).json({
-        success: true,
-        message: 'User',
-        data: user,
-      });
-    })
-    .catch((err) => {
-      res.status(500).json({
-        success: false,
-        message: 'Server error. Please try again.',
-        error: err.message,
-      });
-    });
-}
-
-exports.addNewWords = async (req, res) => {
-  console.log("req.body.newWords", req.body.newWords);
-  newWords = await Vocabulary.find({ name: { $in: req.body.newWords } })
-    .then(words => {
-      return words
+exports.getById = async(req, res) => {
+  const {id} = req.params
+  const info =  await User.findById(id)
+  .select('username email')
+  .then((info) => info)
+  const category = await User.aggregate([
+      { $match : { _id : ObjectId(id)}} ,
+      {$project: {"is_deleted" : 0, "__v" : 0 , "password": 0, "roles" : 0}},
+      {
+        $lookup:
+        {
+          from: "vocabularies",
+          localField: "category" ,
+          foreignField:  "_id" ,
+          as: "category"
+        }
+      },
+      {
+        $unwind: {
+          path: "$category",
+          includeArrayIndex: "arrayIndex"
+        }
+      },
+      {
+        $group: {
+          _id:  "$category.type",
+          type: {$first: "$category.type"},
+          count : {$sum: 1}
+        }
+      }
+    ])
+    .then((category) => {
+      return category
     })
     .catch((err) => {
       return []
+    });
+    console.log(info);
+    res.status(200).json({
+        username: info.username,
+        email: info.email, 
+        category
     })
-  console.log("newWords", newWords);
-  User.findByIdAndUpdate(req.params.id, {
-    $push: {
+}
+
+
+// Add newWord to User 
+
+exports.addNewWords = async (req, res) => {
+  console.log("req.body.newWords", req.body.newWords);
+  const {newWords} = req.body
+  const {id} = req.params
+  User.findByIdAndUpdate(id, {
+    $addToSet: {
       category: {
         $each: newWords
       }
     }
   })
-    .then((dataR) => {
+    .then(() => {
       return res.status(200).json({
         success: true,
         message: 'Added new words !',
-        data: dataR,
       });
     })
     .catch((err) => {
@@ -100,7 +123,7 @@ exports.updateUser = async (req, res) => {
     username: req.body.username,
     email: req.body.email,
   }
-  newWords = await User.findByIdAndUpdate(req.params.id, {
+  await User.findByIdAndUpdate(req.params.id, {
     $set: updateUser
   })
     .then(response => {
