@@ -141,3 +141,70 @@ exports.updateUser = async (req, res) => {
 
     })
 }
+
+
+exports.getTranslateExercise = (req, res) => {
+  const response = [
+      {
+        id: 1,
+        question: 'Xin chào',
+        answer: 'H E L L O' ,
+        random: 'E L O H L'
+      },
+      {
+        id: 2,
+        question: 'Con mèo',
+        answer: 'C A T' ,
+        random: 'A C T'
+      },
+      {
+        id: 3,
+        question: 'Con chó',
+        answer: 'D O G' ,
+        random: 'G O D'
+      },
+      {
+        id: 4,
+        question: 'Con heo',
+        answer: 'P I G' ,
+        random: 'P G I'
+      },
+      {
+        id: 5,
+        question: 'Con chim',
+        answer: 'B I R D' ,
+        random: 'B I D I'
+      },
+      {
+        id: 6,
+        question: 'Tạm biệt',
+        answer: 'G O O D B Y E' ,
+        random: 'O O D G E Y B'
+      },
+      {
+        id: 7,
+        question: 'Bút chì',
+        answer: 'P E N C I L' ,
+        random: 'P N E C L I'
+      },
+      {
+        id: 8,
+        question: 'Con bò',
+        answer: 'C O W' ,
+        random: 'C W O'
+      },
+      {
+        id: 9,
+        question: 'Con kiến',
+        answer: 'A N T' ,
+        random: 'T A N'
+      },
+      {
+        id: 10,
+        question: 'Súng',
+        answer: 'G U N' ,
+        random: 'G N U'
+      }
+  ]
+
+}

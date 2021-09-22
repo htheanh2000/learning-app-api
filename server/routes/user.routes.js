@@ -15,4 +15,5 @@ module.exports = function(app) {
   app.put("/api/user/:id/add-new-words", controller.addNewWords)
   app.delete("/api/user/:id/", controller.deleteUser)
   app.put("/api/user/:id/", controller.updateUser)
+  app.put("/api/translate-exercise", controller.getTranslateExercise)
 };
