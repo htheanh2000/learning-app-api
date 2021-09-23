@@ -207,4 +207,9 @@ exports.getTranslateExercise = (req, res) => {
       }
   ]
 
+  res.json({
+    success: true,
+    data: response
+  })
+
 }
