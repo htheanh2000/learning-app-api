@@ -211,5 +211,275 @@ exports.getTranslateExercise = (req, res) => {
     success: true,
     data: response
   })
+}
 
+
+exports.getChooseCorrectExercise = (req, res) => {
+  const response = [
+      {
+        id: 1,
+        question: 'Dog',
+        answers: [
+          {
+            id: 1,
+            text: 'Con chó',
+            isCorrect: true, 
+          },
+          {
+            id: 2,
+            text: 'Con mèo',
+            isCorrect: false, 
+          },
+          {
+            id: 3,
+            text: 'Con cá',
+            isCorrect: false, 
+          },
+          {
+            id: 4,
+            text: 'Con heo',
+            isCorrect: false, 
+          }
+        ]
+      },
+      {
+        id: 2,
+        question: 'Cat',
+        answers: [
+          {
+            id: 1,
+            text: 'Con vịt',
+            isCorrect: false, 
+          },
+          {
+            id: 2,
+            text: 'Con heo',
+            isCorrect: false, 
+          },
+          {
+            id: 3,
+            text: 'Con cá mặp ',
+            isCorrect: false, 
+          },
+          {
+            id: 4,
+            text: 'Con ca heo',
+            isCorrect: false, 
+          }
+        ]
+      },
+      {
+        id: 3,
+        question: 'Mouse',
+        answers: [
+          {
+            id: 1,
+            text: 'Con Mèo',
+            isCorrect: false, 
+          },
+          {
+            id: 2,
+            text: 'Con sư tử',
+            isCorrect: false, 
+          },
+          {
+            id: 3,
+            text: 'Con chuột',
+            isCorrect: true, 
+          },
+          {
+            id: 4,
+            text: 'Con hổ',
+            isCorrect: false, 
+          }
+        ]
+      },
+      {
+        id: 4,
+        question: 'Lion',
+        answers: [
+          {
+            id: 1,
+            text: 'Con cá chép',
+            isCorrect: false, 
+          },
+          {
+            id: 2,
+            text: 'Con chó sói',
+            isCorrect: false, 
+          },
+          {
+            id: 3,
+            text: 'Con cọp',
+            isCorrect: false, 
+          },
+          {
+            id: 4,
+            text: 'Con sư tử',
+            isCorrect: true, 
+          }
+        ]
+      },
+      {
+        id: 5,
+        question: 'Wolf',
+        answers: [
+          {
+            id: 1,
+            text: 'Con chó sói',
+            isCorrect: true, 
+          },
+          {
+            id: 2,
+            text: 'Con mèo',
+            isCorrect: false, 
+          },
+          {
+            id: 3,
+            text: 'Con cá',
+            isCorrect: false, 
+          },
+          {
+            id: 4,
+            text: 'Con heo',
+            isCorrect: false, 
+          }
+        ]
+      },
+      {
+        id: 6,
+        question: 'Shark',
+        answers: [
+          {
+            id: 1,
+            text: 'Khủng long',
+            isCorrect: false, 
+          },
+          {
+            id: 2,
+            text: 'Gấu bắc cực',
+            isCorrect: false, 
+          },
+          {
+            id: 3,
+            text: 'Cá mặp',
+            isCorrect: true, 
+          },
+          {
+            id: 4,
+            text: 'Con voi',
+            isCorrect: false, 
+          }
+        ]
+      },
+      {
+        id: 7,
+        question: 'Bear',
+        answers: [
+          {
+            id: 1,
+            text: 'Con gấu',
+            isCorrect: true, 
+          },
+          {
+            id: 2,
+            text: 'Con hổ',
+            isCorrect: false, 
+          },
+          {
+            id: 3,
+            text: 'Con chồn',
+            isCorrect: false, 
+          },
+          {
+            id: 4,
+            text: 'Con thỏ',
+            isCorrect: false, 
+          }
+        ]
+      },
+      {
+        id: 8,
+        question: 'Rabbit',
+        answers: [
+          {
+            id: 1,
+            text: 'Con chó',
+            isCorrect: false, 
+          },
+          {
+            id: 2,
+            text: 'Con mèo',
+            isCorrect: false, 
+          },
+          {
+            id: 3,
+            text: 'Con thỏ',
+            isCorrect: true, 
+          },
+          {
+            id: 4,
+            text: 'Con heo',
+            isCorrect: false, 
+          }
+        ]
+      },
+      {
+        id: 9,
+        question: 'Duck',
+        answers: [
+          {
+            id: 1,
+            text: 'Con heo',
+            isCorrect: true, 
+          },
+          {
+            id: 2,
+            text: 'Con bò',
+            isCorrect: true, 
+          },
+          {
+            id: 3,
+            text: 'Con vịt',
+            isCorrect: true, 
+          },
+          {
+            id: 4,
+            text: 'Con trâu',
+            isCorrect: true, 
+          }
+        ]
+      },
+      {
+        id: 10,
+        question: 'Cow',
+        answers: [
+          {
+            id: 1,
+            text: 'Con bò',
+            isCorrect: true, 
+          },
+          {
+            id: 2,
+            text: 'Con vịt',
+            isCorrect: true, 
+          },
+          {
+            id: 3,
+            text: 'Con cá',
+            isCorrect: true, 
+          },
+          {
+            id: 4,
+            text: 'Con thỏ',
+            isCorrect: true, 
+          }
+        ]
+      },
+  ]
+
+  res.json({
+    success: true,
+    data: response
+  })
 }
