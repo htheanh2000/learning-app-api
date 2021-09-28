@@ -17,4 +17,5 @@ module.exports = function(app) {
   app.put("/api/user/:id/", controller.updateUser)
   app.get("/api/translate-exercise", controller.getTranslateExercise)
   app.get("/api/choose-correct-exercise", controller.getChooseCorrectExercise)
+  app.get("/api/match-game-exercise", controller.getMatchGameExercise)
 };
