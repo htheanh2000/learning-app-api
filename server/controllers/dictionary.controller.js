@@ -7,6 +7,10 @@ exports.search =(req, res)=> {
         name: 'Catch',
         meaning: 'Bắt kịp',
         type: 'verb'
+    },{
+        name: 'Cow',
+        meaning: 'Con bò',
+        type: 'noun'
     }]
     res.json({
         success: true,
