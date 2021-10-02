@@ -30,6 +30,7 @@ mongoose.connect(`mongodb+srv://${db.USERNAME}:${db.PASSWORD}@cluster0.0gk1e.mon
 require('./server/routes/auth.routes')(app);
 require('./server/routes/user.routes')(app);
 require('./server/routes/vocabulary.routes')(app);
+require('./server/routes/dictionary.routes')(app);
 app.get("/", (req,res)=> {
   res.json('Hello world Heroku')
 });
