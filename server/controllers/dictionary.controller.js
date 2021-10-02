@@ -8,5 +8,8 @@ export function search(req, res) {
         meaning: 'Bắt kịp',
         type: 'verb'
     }]
-    res.json(response)
+    res.json({
+        success: true,
+      data: response
+    })
 }
