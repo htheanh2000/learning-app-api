@@ -9,5 +9,5 @@ module.exports = function(app) {
     next();
   });
   
-  app.get("/api/user/", controller.search)
+  app.get("/api/dictionary/", controller.search)
 };
