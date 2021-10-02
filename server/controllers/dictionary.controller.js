@@ -1,4 +1,4 @@
-export function search(req, res) {
+exports.search =(req, res)=> {
     const response = [{
         name: 'Cat',
         meaning: 'Con mèo',
